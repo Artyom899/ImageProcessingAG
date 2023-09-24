@@ -34,7 +34,7 @@ public class CourseConflictPlugin implements PlugIn {
 
         
         ImageProcessor binaryProcessor = new ByteProcessor(numCourses, numCourses);
-        binaryProcessor.setValue(255); // Set the pixel value to white
+        binaryProcessor.setValue(255); 
         binaryProcessor.fill();
 
         
@@ -44,11 +44,11 @@ public class CourseConflictPlugin implements PlugIn {
             while ((line = br.readLine()) != null) {
                 StringTokenizer tokenizer = new StringTokenizer(line);
                 if (tokenizer.countTokens() != 2) {
-                    continue; // Skip lines with less or more than two tokens
+                    continue; 
                 }
                 int x = Integer.parseInt(tokenizer.nextToken());
                 int y = Integer.parseInt(tokenizer.nextToken());
-                binaryProcessor.putPixel(x, y, 0); // Mark the pixel as black
+                binaryProcessor.putPixel(x, y, 0); 
             }
             br.close();
         } catch (IOException e) {
@@ -89,7 +89,7 @@ public class SwapPanelsPlugin implements PlugInFilter {
 
     @Override
     public int setup(String arg, ImagePlus imp) {
-        // This filter requires an open image.
+        
         if (imp == null) {
             IJ.noImage();
             return DONE;
