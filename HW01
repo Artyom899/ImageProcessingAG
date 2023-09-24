@@ -14,7 +14,7 @@ public class CourseConflictPlugin implements PlugIn {
 
     @Override
     public void run(String arg) {
-        // Step 1: Read the *.crs file to determine the number of courses (N)
+        
         int numCourses = 0;
         try {
             BufferedReader br = new BufferedReader(new FileReader("hec-s-92.crs"));
@@ -28,12 +28,12 @@ public class CourseConflictPlugin implements PlugIn {
             return;
         }
 
-        // Step 2: Create a BinaryProcessor of N x N size and fill it with white
+        
         ImageProcessor binaryProcessor = new ByteProcessor(numCourses, numCourses);
         binaryProcessor.setValue(255); // Set the pixel value to white
         binaryProcessor.fill();
 
-        // Step 3: Read the *.stu file to identify course clashes and mark them in black
+        
         try {
             BufferedReader br = new BufferedReader(new FileReader("hec-s-92.stu"));
             String line;
@@ -52,13 +52,13 @@ public class CourseConflictPlugin implements PlugIn {
             return;
         }
 
-        // Step 4: Create an ImagePlus and display it
+        
         ImagePlus imagePlus = new ImagePlus("Course Schedule", binaryProcessor);
         imagePlus.show();
 
-        // Save the created image in *.png format with the dataset name
+        
         String datasetName = "hec-s-92";
-        String outputPath = datasetName + ".png";
+        String outputPath = hec-s-92 + ".png";
         FileSaver fileSaver = new FileSaver(imagePlus);
         if (fileSaver.saveAsPng(outputPath)) {
             IJ.log("Image saved as " + outputPath);
