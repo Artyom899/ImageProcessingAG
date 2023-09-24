@@ -67,3 +67,78 @@ public class CourseConflictPlugin implements PlugIn {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+import ij.*;
+import ij.plugin.filter.PlugInFilter;
+import ij.process.*;
+import java.awt.*;
+
+public class SwapPanelsPlugin implements PlugInFilter {
+
+    @Override
+    public int setup(String arg, ImagePlus imp) {
+        // This filter requires an open image.
+        if (imp == null) {
+            IJ.noImage();
+            return DONE;
+        }
+        return DOES_8G;
+    }
+
+    @Override
+    public void run(ImageProcessor ip) {
+        
+        int width = ip.getWidth();
+        int height = ip.getHeight();
+        
+        
+        int halfWidth = width / 2;
+        int halfHeight = height / 2;
+
+        
+        ImageProcessor leftPanel = ip.createProcessor(halfWidth, height);
+        ImageProcessor rightPanel = ip.createProcessor(halfWidth + (width % 2), height);
+        
+        
+        leftPanel.copyBits(ip, 0, 0, Blitter.COPY);
+        rightPanel.copyBits(ip, halfWidth, 0, Blitter.COPY);
+        
+        
+        leftPanel.flipHorizontal();
+        rightPanel.flipHorizontal();
+        
+        
+        ImageProcessor topPanel = ip.createProcessor(width, halfHeight);
+        ImageProcessor bottomPanel = ip.createProcessor(width, halfHeight + (height % 2));
+        
+        topPanel.copyBits(ip, 0, 0, Blitter.COPY);
+        bottomPanel.copyBits(ip, 0, halfHeight, Blitter.COPY);
+        
+        
+        topPanel.flipVertical();
+        bottomPanel.flipVertical();
+        
+      
+        ImageProcessor resultIp = new ByteProcessor(width, height);
+        resultIp.copyBits(leftPanel, 0, 0, Blitter.COPY);
+        resultIp.copyBits(rightPanel, halfWidth, 0, Blitter.COPY);
+        resultIp.copyBits(topPanel, 0, 0, Blitter.COPY);
+        resultIp.copyBits(bottomPanel, 0, halfHeight, Blitter.COPY);
+        
+    
+        ImagePlus resultImage = new ImagePlus("Swapped Panels", resultIp);
+        resultImage.show();
+        
+        
+        FileSaver fileSaver = new FileSaver(resultImage);
+        fileSaver.saveAsPng("copy.png");
+    }
+}
