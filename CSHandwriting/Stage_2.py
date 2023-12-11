@@ -7,14 +7,10 @@ import numpy as np
 #Image Preprocessing
 
 # Assume we have the 'OOP.MT.170317.H051_p1_bin.jpg' image from the previous steps
-
 texti = cv2.imread('OOP.MT.170317.H051_p1_bin.jpg', cv2.IMREAD_GRAYSCALE)
 
-# Smoothening
-smooth_img = cv2.GaussianBlur(texti, (5, 5), 0)
-
 # Edge detection
-edges = cv2.Canny(smooth_img, 50, 150)
+edges = cv2.Canny(cv2.GaussianBlur(texti, (5, 5), 0), 50, 150)
 
 # Dilate edges for better detection
 dilatedEdges = cv2.dilate(edges, None, iterations=3)
