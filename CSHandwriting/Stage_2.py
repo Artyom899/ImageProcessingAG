@@ -34,11 +34,6 @@ rot_image = cv2.warpAffine(texti,
                            flags=cv2.INTER_CUBIC,
                            borderMode=cv2.BORDER_REPLICATE)
 
-# Display the rotated image
-cv2.imshow('Rotated Image', rot_image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
 #2. Size and Orientation
 
 # Get the size and orientation of the page
